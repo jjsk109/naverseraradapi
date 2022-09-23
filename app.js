@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js';
 import request from 'request';
 import moment from 'moment';
 import fetch from 'node-fetch'
-
+import contentDisposition  from 'content-disposition';
 // fs im
 import fs from 'fs';
 
@@ -43,7 +43,14 @@ console.log(res.headers.get('content-type'));
 // const result = res.json();
 // console.log(result);
 console.log("------------------------------------------------");
-const file = res.headers.get('content-disposition').split("\"")[1];
-console.log(file);
-const f = fs.open(file);
-console.log(f);
+// const file = res.headers.get('content-disposition').split("\"")[1];
+// console.log(file);
+// const f = fs.open(file);
+// console.log(f);
+
+//var disposition = contentDisposition.parse('attachment; filename="EURO rates.txt"; filename*=UTF-8\'\'%e2%82%ac%20rates.txt')
+const disposition = contentDisposition.parse(res.headers.get('content-disposition'));
+console.log(disposition);
+
+const text = await res.text();
+console.log(text);
